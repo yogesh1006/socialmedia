@@ -70,11 +70,12 @@ module.exports = {
             },{
                 new: true
             })
+            const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name")
 
             res.json({
                 status:'success',
                 message:'Liked Post success.',
-                data:updatedLikes
+                data:posts
             })
           } catch (error) {
             res.status(400).json({                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
