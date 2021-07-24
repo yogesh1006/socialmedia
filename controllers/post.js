@@ -19,10 +19,12 @@ module.exports = {
             })
 
             let newPost = await post.save()
+            const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name")
+
             res.json({
                 status:'success',
                 message:'Your post was sent.',
-                data:newPost
+                data:posts
             })
         } catch (error) {
             res.status(400).json({
@@ -91,11 +93,12 @@ module.exports = {
             },{
                 new: true
             })
+            const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name")
 
             res.json({
                 status:'success',
                 message:'unliked Post success.',
-                data:updatedLikes
+                data:posts
             })
           } catch (error) {
             res.status(400).json({                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
@@ -115,19 +118,14 @@ module.exports = {
              },{
                  new: true
              }).populate("comments.postedBy","_id name")
-            //  .exec((err,result)=>{
-            //     if(err){
-            //         return res.status(422).json({error:err})
-            //     }else{
-            //         res.json(result)
-            //     }
-            // })
+           
+             const comments = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name")
 
  
              res.json({
                  status:'success',
                  message:'comment success.',
-                 data:newcomments
+                 data:comments
              })
            } catch (error) {
              res.status(400).json({                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
@@ -147,8 +145,10 @@ module.exports = {
             }
             if(post.postedBy._id.toString() === req.user._id.toString()){
                   post.remove()
-                  .then(result=>{
-                      res.json(result)
+                  .then(async (result)=>{
+                    const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name")
+
+                      res.json(posts)
                   }).catch(err=>{
                       console.log(err)
                   })
