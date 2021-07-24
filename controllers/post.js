@@ -36,7 +36,7 @@ module.exports = {
     getAllPosts : async (req, res) => {
         
         try {
-            const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name")
+            const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name").sort({_id:-1})
 
             res.json({
                 status:'success',
@@ -72,7 +72,7 @@ module.exports = {
             },{
                 new: true
             })
-            const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name")
+            const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name").sort({_id:-1})
 
             res.json({
                 status:'success',
@@ -93,7 +93,7 @@ module.exports = {
             },{
                 new: true
             })
-            const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name")
+            const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name").sort({_id:-1})
 
             res.json({
                 status:'success',
@@ -119,7 +119,7 @@ module.exports = {
                  new: true
              }).populate("comments.postedBy","_id name")
            
-             const comments = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name")
+             const comments = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name").sort({_id:-1})
 
  
              res.json({
@@ -146,7 +146,7 @@ module.exports = {
             if(post.postedBy._id.toString() === req.user._id.toString()){
                   post.remove()
                   .then(async (result)=>{
-                    const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name")
+                    const posts = await Post.find().populate('postedBy','_id name').populate("comments.postedBy","_id name").sort({_id:-1})
 
                       res.json(posts)
                   }).catch(err=>{
@@ -159,7 +159,7 @@ module.exports = {
     getOtherUserPosts: async (req, res) => {
         //  console.log(req.user);
         try {
-            const posts = await Post.find({postedBy : {$in: req.user.following }}).populate('postedBy','_id name').populate("comments.postedBy","_id name")
+            const posts = await Post.find({postedBy : {$in: req.user.following }}).populate('postedBy','_id name').populate("comments.postedBy","_id name").sort({_id:-1})
             //  console.log(posts);
             res.json({
                 status:'success',
