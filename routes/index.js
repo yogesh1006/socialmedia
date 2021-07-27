@@ -12,6 +12,7 @@ router.all('/api/*', isUserAuthenticated)
 // user routes
 router.post("/register",Validate.validateSignup(),UserController.register);
 router.post("/login",Validate.validateLogin(),UserController.login);
+router.get("/api/get_user",UserController.getUser);
 
 //post routes
 router.post("/api/create_post", PostController.createPost)

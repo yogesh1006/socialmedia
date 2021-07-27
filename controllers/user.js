@@ -75,4 +75,19 @@ module.exports = {
       });
     }
   },
+
+   getUser: async (req, res) => {
+      try {
+         let user = await User.findById(req.user._id).select("-password")
+         res.json({
+           data: user
+         })
+        
+      } catch (error) {
+        res.status(400).json({
+          message: (err && err.message) || "Oops! Failed to get user.",
+        });
+      }
+
+   }
 };
