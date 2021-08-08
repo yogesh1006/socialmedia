@@ -36,7 +36,7 @@ module.exports = {
     getAllPosts : async (req, res) => {
         
         try {
-            const posts = await Post.find().populate('postedBy created_at','_id name').populate("comments.postedBy","_id name").sort({_id:-1})
+            const posts = await Post.find().populate('postedBy ','_id name').populate("comments.postedBy","_id name").populate('created_at').sort({_id:-1})
 
             res.json({
                 status:'success',
