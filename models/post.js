@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const moment = require("moment");
 
 
 const postSchema = new mongoose.Schema({
@@ -27,8 +28,16 @@ const postSchema = new mongoose.Schema({
     postedBy:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"User"
-    }
+    },
+    created_at: {
+        type: Date,
+        default: moment().unix() * 1000,
+      },
 })
 
+postSchema.pre("save", function () {
+    let post = this;
+    post.created_at = moment().unix() * 1000;
+  });
 
 module.exports = mongoose.model("Post", postSchema);
