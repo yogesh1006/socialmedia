@@ -1,6 +1,4 @@
 const mongoose = require('mongoose')
-const moment = require("moment");
-
 
 const postSchema = new mongoose.Schema({
     title:{
@@ -29,15 +27,15 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
-    created_at: {
-        type: Date,
-        default: moment().unix() * 1000,
-      },
+    // created_at: {
+    //     type: Date,
+    //     default: Date.now
+    //   },
 })
 
-postSchema.pre("save", function () {
-    let post = this;
-    post.created_at = moment().unix() * 1000;
-  });
+// postSchema.pre("save", function () {
+//     let post = this;
+//     post.created_at = Date.now;
+//   });
 
 module.exports = mongoose.model("Post", postSchema);
