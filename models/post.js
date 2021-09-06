@@ -21,7 +21,11 @@ const postSchema = new mongoose.Schema({
         postedBy:{
             type: mongoose.Schema.Types.ObjectId,
             ref:'User'
-        }
+        },
+        created_at: {
+            type: Date,
+            default: Date.now
+        },
     }],
     postedBy:{
         type: mongoose.Schema.Types.ObjectId,
